@@ -59,22 +59,59 @@ addSaxon(saxon) {
     this.saxonArmy.push(saxon);
 }
 vikingAttack() {
-   let indexSaxon = [Math.floor(Math.random() * this.saxonArmy.length)];
+   let indexSaxon = Math.floor(Math.random() * this.saxonArmy.length);
    let randomSaxon = this.saxonArmy[indexSaxon];
-   let indexViking = [Math.floor(Math.random() * this.vikingArmy.length)];
+   let indexViking = Math.floor(Math.random() * this.vikingArmy.length);
    let randomViking = this.vikingArmy[indexViking];
-   if (randomSaxon.health > 0) {
-       this.saxonArmy.splice(randomSaxon,1);
+   
+   let totalDamage = randomSaxon.receiveDamage(randomViking.strength)
+   //return randomSaxon.receiveDamage(randomViking.strength)
+   if (randomSaxon.health <= 0) {
+       this.saxonArmy.splice(indexSaxon,1);
  } 
-  return randomSaxon.receiveDamage(randomViking.strength)
- }
+ return totalDamage
+}
 saxonAttack() {
+    let indexSaxon = Math.floor(Math.random() * this.saxonArmy.length);
+    let randomSaxon = this.saxonArmy[indexSaxon];
+    let indexViking = Math.floor(Math.random() * this.vikingArmy.length);
+     let randomViking = this.vikingArmy[indexViking];
+     let totalDamage = randomViking.receiveDamage(randomSaxon.strength);
+
+    if (randomViking.health <= 0) {
+        this.vikingArmy.splice(indexViking,1);
+  } 
+  
+  return totalDamage
+   //return randomViking.receiveDamage(randomSaxon.strength);
+  }
+
+  /*Attack() {
+      let indexSaxon = [Math.floor(Math.random() * this.saxonArmy.length)];
+      let randomSaxon = this.saxonArmy[indexSaxon];
+      let indexViking = [Math.floor(Math.random() * this.vikingArmy.length)];
+      let randomViking = this.vikingArmy[indexViking];
+      
+    if (randomSaxon.health > 0) {
+        this.saxonArmy.splice(randomSaxon,1);
+        return randomSaxon.receiveDamage(randomViking.strength)
+} else { 
     if (randomViking.health > 0) {
         this.vikingArmy.splice(randomViking,1);
-  } 
-   return randomViking.receiveDamage(randomSaxon.strength)
-  }
+        
+   return randomViking.receiveDamage(randomSaxon.strength);
 }
 
-
+}
+}*/
+showStatus() {
+    if (this.saxonArmy.length === 0) { 
+    return `Vikings have won the war of the century!`
+} else if (this.vikingArmy.length === 0) { 
+    return `Saxons have fought for their lives and survived another day...`
+} else if (this.vikingArmy.length >= 1 && this.saxonArmy.length >= 1) {
+    return `Vikings and Saxons are still in the thick of battle.`
+    }
+}
+}
 
